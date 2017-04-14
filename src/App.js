@@ -7,19 +7,26 @@ class App extends Component {
     super()
 
     this.state = {
-      isLoading: false
+      isLoading: false,
+      stripeToken: null
     }
 
+    // configure Stripe Checkout
     this.stripeHandler = window.StripeCheckout.configure({
       key: "<YOUR_STRIPE_PUBLISHABLE_KEY>",
       image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
       locale: 'auto',
-      token: function(token) {
-        // You can access the token ID with `token.id`.
-        // Get the token ID to your server-side code for use to complete payment
-      }
+      token: this.onGetStripeToken.bind(this)
     });
   }
+
+  onGetStripeToken (token) {
+    // Got Stripe token. This means user's card is valid!
+    // We need to continue the payment process by sending this token to our own server.
+    // More info: https://stripe.com/docs/charges
+    this.setState({stripeToken: token})
+  }
+
   onClickPay (e) {
     e.preventDefault()
     this.setState({isLoading: true});
@@ -28,6 +35,7 @@ class App extends Component {
       this.setState({isLoading: false})
     }
 
+    // open Stripe Checkout
     this.stripeHandler.open({
       name: 'My Delightful Shop',
       description: 'An awesome product',
@@ -37,7 +45,12 @@ class App extends Component {
     });
   }
   render() {
-    const buttonText = this.state.isLoading ? "Please wait ..." : "Pay $10"
+    var buttonText = this.state.isLoading ? "Please wait ..." : "Pay $10"
+    var buttonClassName = "Pay-Now" + (this.state.isLoading ? " Pay-Now-Disabled" : "")
+    if (this.state.stripeToken) {
+      buttonText = "Processing your payment ..."
+      buttonClassName = "Pay-Now Pay-Now-Disabled"
+    }
     return (
       <div className="App">
         <div className="App-header">
@@ -47,7 +60,8 @@ class App extends Component {
         <p className="App-intro">
           {"Tap the button below to open Stripe's Checkout overlay. Replace <YOUR_STRIPE_PUBLISHABLE_KEY> in App.js with your own key."}
         </p>
-        <a className={"Pay-Now" + (this.state.isLoading ? " Pay-Now-Disabled" : "")} href="#" onClick={this.onClickPay.bind(this)}>{buttonText}</a>
+        {this.state.stripeToken ? <p className="App-intro">{"Got Stripe token ID: " + this.state.stripeToken.id + ". Continue payment process in the server."}</p> : null}
+        <a className={buttonClassName} href="#" onClick={this.onClickPay.bind(this)}>{buttonText}</a>
       </div>
     );
   }
