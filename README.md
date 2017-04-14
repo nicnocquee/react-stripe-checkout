@@ -39,3 +39,5 @@ this.stripeHandler.open({
 - `yarn install` or `npm install`
 - Open `src/App.js` and replace `<YOUR_STRIPE_PUBLISHABLE_KEY>` with your [Stripe's publishable key](https://dashboard.stripe.com/account/apikeys).
 - `yarn run`
+
+[@nicnocquee](https://twitter.com/nicnocquee).
