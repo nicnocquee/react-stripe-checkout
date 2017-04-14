@@ -1,5 +1,7 @@
 Integrating [Stripe's Checkout](https://stripe.com/docs/checkout/tutorial) with **custom pay button** to your react app is actually pretty simple. You don't need to install third party [package](https://github.com/azmenak/react-stripe-checkout). This project (bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app)) shows how to do it with a few lines of codes.
 
+[DEMO VIDEO](https://youtu.be/UAKriPqatCA)
+
 1. Add the following to [public/index.html](https://github.com/nicnocquee/react-stripe-checkout/blob/master/public/index.html#L30)
 
 ```html
