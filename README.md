@@ -33,7 +33,7 @@ this.stripeHandler.open({
 
 4. [Send the Stripe token to your server](https://github.com/nicnocquee/react-stripe-checkout/blob/master/src/App.js#L23) when your customer's card has been validated.
 5. ...
-6. **PROFIT!**
+6. **PROFIT!** 🤑💰💵💸🌈🚀
 
 # Getting Started
 
